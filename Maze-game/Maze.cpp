@@ -4,7 +4,7 @@ Maze::Maze() :_judge(false) {
 
 }
 Maze::~Maze() {
-	//³ÌĞò½áÊøÊ±µ÷ÓÃÎö¹¹º¯ÊıÇå³ı¹¹ÔìµÄ¿Õ¼ä
+	//ç¨‹åºç»“æŸæ—¶è°ƒç”¨ææ„å‡½æ•°æ¸…é™¤æ„é€ çš„ç©ºé—´
 	for (int i = _map.size()-1; i>=0; i--)
 	{
 		delete _mark[i];
@@ -17,14 +17,14 @@ Maze::~Maze() {
 		_path.pop_back();
 	}
 }
-bool Maze::CreateMaze(const int& mapSize) {           //mapSzieÃÔ¹¬´óĞ¡
-	//½¨Á¢ÃÔ¹¬
+bool Maze::CreateMaze(const int& mapSize) {           //mapSzieè¿·å®«å¤§å°
+	//å»ºç«‹è¿·å®«
 	int* digit = NULL;
 	string str;                      
-	for(int i=0;i<mapSize;i++)  //Â¼ÈëÃÔ¹¬
+	for(int i=0;i<mapSize;i++)  //å½•å…¥è¿·å®«
 	{
 		cin >> str;
-		if (str.size() != mapSize)     //Ã¿ĞĞ´óĞ¡ÒªµÈÓÚmapSize
+		if (str.size() != mapSize)     //æ¯è¡Œå¤§å°è¦ç­‰äºmapSize
 			return false;
 		for (int i = 0; i < str.length(); i++)
 		{
@@ -36,7 +36,7 @@ bool Maze::CreateMaze(const int& mapSize) {           //mapSzieÃÔ¹¬´óĞ¡
 		digit = new int[mapSize];      
 		if (digit == NULL)
 			return false;
-		for (int j = 0; j < mapSize; j++)    //¸ø±êÖ¾¾ØÕóÈ«²¿³õÊ¼»¯Îª0
+		for (int j = 0; j < mapSize; j++)    //ç»™æ ‡å¿—çŸ©é˜µå…¨éƒ¨åˆå§‹åŒ–ä¸º0
 			digit[j] = 0;
 		_mark.push_back(digit);
 		digit = NULL;
@@ -46,40 +46,40 @@ bool Maze::CreateMaze(const int& mapSize) {           //mapSzieÃÔ¹¬´óĞ¡
 }
 
 bool Maze::FindPath() {
-	//ÕÒÃÔ¹¬Â·¾¶
+	//æ‰¾è¿·å®«è·¯å¾„
 	Find(1, 1);
 	if (_judge != true)
 		return false;
 	return true;
 }
 void Maze::Find(int x, int y) {
-	//µİ¹éÕÒÃÔ¹¬Â·¾¶
-	int size = _map[0].size();      //ÃÔ¹¬³¤
-	int m = size - 2;               //ÓÃÓÚÃÔ¹¬³ö¿ÚµÄÏÂ±ê
+	//é€’å½’æ‰¾è¿·å®«è·¯å¾„
+	int size = _map[0].size();      //è¿·å®«é•¿
+	int m = size - 2;               //ç”¨äºè¿·å®«å‡ºå£çš„ä¸‹æ ‡
 	int* num = new int[2];
 	num[0] = x;                
 	num[1] = y;
-	_path.push_back(num);           //¼ÇÂ¼Â·¾¶
-	_mark[x][y] = 1;                //±ê¼ÇÒÑ¾­×ß¹ıµÄµØ·½
-	if (x == m&&y == m)             //µİ¹é½áÊøÌõ¼ş
+	_path.push_back(num);           //è®°å½•è·¯å¾„
+	_mark[x][y] = 1;                //æ ‡è®°å·²ç»èµ°è¿‡çš„åœ°æ–¹
+	if (x == m&&y == m)             //é€’å½’ç»“æŸæ¡ä»¶
 	{
 		_judge = true;
 		return;
 	}
-	if (_judge != true&&_map[x - 1][y] != '#'&&_mark[x - 1][y] != 1)   //ÏòÉÏ
+	if (_judge != true&&_map[x - 1][y] != '#'&&_mark[x - 1][y] != 1)   //å‘ä¸Š   //å‘ä¸Š
 	{
 		
 		Find(x -1, y);
 	}
-	if (_judge != true&&_map[x][y + 1] != '#'&&_mark[x][y+1] != 1 )    //ÏòÓÒ
+	if (_judge != true&&_map[x][y + 1] != '#'&&_mark[x][y+1] != 1 )    //å‘å³
 	{
 		Find(x,y + 1);
 	}
-	if (_judge != true &&_map[x + 1][y] != '#'&&_mark[x +1][y] != 1)  //ÏòÏÂ
+	if (_judge != true &&_map[x + 1][y] != '#'&&_mark[x +1][y] != 1)  //å‘ä¸‹
 	{
 		Find(x + 1, y);
 	}
-	if (_judge != true &&_map[x][y - 1] != '#'&&_mark[x][y-1] != 1)   //Ïò×ó
+	if (_judge != true &&_map[x][y - 1] != '#'&&_mark[x][y-1] != 1)   //å‘å·¦
 	{
 		Find(x, y - 1);
 	}
@@ -91,25 +91,25 @@ void Maze::Find(int x, int y) {
 }
 
 void Maze::Show() {
-	//Êä³ö´øÓĞÂ·¾¶µÄÃÔ¹¬
+	//è¾“å‡ºå¸¦æœ‰è·¯å¾„çš„è¿·å®«
 	for (int i = 0; i < _path.size(); i++)
 	{
-		_map[_path[i][0]][_path[i][1]]='x';    //±êÖ¾Â·¾¶
+		_map[_path[i][0]][_path[i][1]]='x';    //æ ‡å¿—è·¯å¾„
 	}
 
-	cout << "ÃÔ¹¬µØÍ¼£º" << endl;
+	cout << "è¿·å®«åœ°å›¾ï¼š" << endl;
 	cout << endl;
 	int size = _map[0].size();
 	cout << "     ";
 	for (int i = 0; i < size; i++)
 	{
-		cout << i << "ÁĞ" << "   ";
+		cout << i << "åˆ—" << "   ";
 	}
 	cout << endl;
 	cout << endl;
 	for (int i = 0; i < size; i++)
 	{
-		cout << i << "ĞĞ   ";
+		cout << i << "è¡Œ   ";
 		for (int j = 0; j < size; j++)
 		{
 			cout << _map[i][j] << "     ";
@@ -117,7 +117,7 @@ void Maze::Show() {
 		cout << endl;
 		cout << endl;
 	}
-	cout << "ÃÔ¹¬Â·¾¶£º" << endl;
+	cout << "è¿·å®«è·¯å¾„ï¼š" << endl;
 	for (int i = 0; i < _path.size(); i++)
 	{
 		cout << "(" << _path[i][0] << "," << _path[i][1] << ")";
